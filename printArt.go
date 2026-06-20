@@ -15,15 +15,15 @@ func PrintArt(s string, banner map[rune][]string) string {
 
 	var result strings.Builder
 
-	for _, g := range lines {
-		if g == "" {
+	for _, inp := range lines {
+		if inp == "" {
 			result.WriteString("\n")
 			continue
 		}
 
-		rd := Render(g, banner)
+		rend := Render(inp, banner)
 
-		for _, k := range rd {
+		for _, k := range rend {
 			result.WriteString(k)
 			result.WriteString("\n")
 		}

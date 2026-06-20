@@ -20,9 +20,9 @@ func LoadBanner(filename string) (map[rune][]string, error) {
 			result[ch] = line[i+1 : i+9]
 			ch++
 		}
-		if len(result) == 0 {
-			return nil, fmt.Errorf("Empty banner file")
-		}
+	}
+	if len(result) == 0 {
+		return nil, fmt.Errorf("Empty banner file")
 	}
 	return result, nil
 }

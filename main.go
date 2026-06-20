@@ -20,7 +20,8 @@ func main() {
 			return
 		}
 
-		banner, err := LoadBanner(os.Args[2])
+		file := "banners/" + os.Args[2] + ".txt"
+		banner, err := LoadBanner(file)
 		if err != nil {
 			fmt.Println("Error Reading file", err)
 			return
@@ -49,7 +50,8 @@ func main() {
 			return
 		}
 
-		banner, err := LoadBanner(os.Args[3])
+		files := "banners/" + os.Args[3] + ".txt"
+		banner, err := LoadBanner(files)
 		if err != nil {
 			fmt.Println("Error Reading file", err)
 			return
