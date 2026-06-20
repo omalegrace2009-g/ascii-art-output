@@ -2,16 +2,15 @@
 
 ## Description
 
-ASCII Art Output is a Go program that generates ASCII art from a given string using predefined banner files. In addition to displaying the generated ASCII art on the terminal, the program supports writing the output to a text file using the `--output=<fileName>` flag.
+ASCII Art Output is a Go program that generates ASCII art from a given string using predefined banner files. In addition to displaying the generated ASCII art in the terminal, the program supports writing the output to a text file using the `--output=<fileName>` flag.
 
-The project extends the functionality of the ASCII-Art project by introducing file handling and command-line option parsing.
+The project extends the basic ASCII-Art functionality by introducing file handling and command-line option parsing.
 
 ---
 
 ## Author
 
-* Ooja Omale
-
+- Ooja Omale
 
 ---
 
@@ -22,111 +21,71 @@ The project extends the functionality of the ASCII-Art project by introducing fi
 ```bash
 go run . "hello" standard
 ```
-
-### Save ASCII Art to a File
-
-```bash
+Save ASCII Art to a File
 go run . --output=banner.txt "hello" standard
-```
-
-### View the Generated File
-
-```bash
+View Generated File
 cat banner.txt
-```
 
----
 
-## Implementation Details
+**Implementation Details**
 
-### 1. Argument Validation
+1. Argument Validation
 
 The program validates the number and format of command-line arguments.
 
-Accepted formats:
+Supported formats:
 
-```bash
+go run . "STRING"
 go run . "STRING" BANNER
-```
+go run . --output=<fileName> "STRING" BANNER
 
-```bash
-go run . --output=<fileName.txt> "STRING" BANNER
-```
+Any invalid format prints a usage message and exits.
 
-Invalid formats display the usage message.
+2. Banner Loading
 
----
+Banner files are loaded using Go’s file system API (os.ReadFile).
 
-### 2. Banner Loading
+Each printable ASCII character (ASCII 32–126) is mapped to its 8-line ASCII representation and stored in:
 
-The selected banner file is read using Go's file system API.
-
-Each printable ASCII character (ASCII 32–126) is mapped to its corresponding 8-line ASCII-art representation and stored in a map:
-
-```go
 map[rune][]string
-```
 
-This allows constant-time lookup during rendering.
+This allows efficient lookup during rendering.
 
----
+3. Input Validation
 
-### 3. Input Validation
+All characters in the input string are validated to ensure they are within the printable ASCII range (32–126).
 
-Before rendering, the program verifies that all characters belong to the printable ASCII range (32–126).
+If an invalid character is found, the program stops execution and displays an error message.
 
-Invalid characters cause the program to terminate with an error message.
+4. ASCII Art Rendering
 
----
-
-### 4. ASCII Art Rendering
-
-The input string is processed character by character.
+The string is processed character by character.
 
 For each character:
 
-1. The corresponding ASCII-art pattern is retrieved from the banner map.
-2. The correct line of the pattern is appended to the output.
-3. The process is repeated for all 8 lines of the banner.
+The corresponding 8-line ASCII pattern is retrieved from the banner map
+Each line is concatenated horizontally with other characters
+This produces the final ASCII-art output
 
-This constructs the final ASCII-art representation.
+5. File Output 
 
----
+If the --output= flag is provided:
 
-### 5. File Output
+The filename is extracted from the flag
+The generated ASCII art is written using os.WriteFile
+No output is printed to the terminal
 
-When the `--output=` flag is provided:
+If no flag is provided, output is printed directly to stdout.
 
-1. The filename is extracted from the flag.
-2. The generated ASCII art is written to the specified file using:
+Allowed Packages
 
-```go
-os.WriteFile()
-```
+Only standard Go packages are used.
 
-3. No output is printed to the terminal.
-
-Without the flag, the ASCII art is displayed directly in the terminal.
-
----
-
-## Allowed Packages
-
-Only Go standard library packages are used.
-
----
-
-## Example
-
-Command:
-
-```bash
+Example
 go run . --output=banner.txt "hello" standard
-```
 
-Output saved in:
+Output written to banner.txt:
 
-```text
  _              _   _          
 | |            | | | |         
 | |__     ___  | | | |   ___   
@@ -135,4 +94,5 @@ Output saved in:
 |_| |_|  \___| |_| |_|  \___/  
                                
                                
-```
+
+---
