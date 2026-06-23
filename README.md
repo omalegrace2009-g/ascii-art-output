@@ -10,7 +10,7 @@ The project extends the basic ASCII-Art functionality by introducing file handli
 
 ## Author
 
-- Ooja Omale
+- Omale Grace
 
 ---
 
